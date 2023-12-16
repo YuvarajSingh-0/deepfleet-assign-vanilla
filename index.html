@@ -10,6 +10,7 @@
 
 <body>
     <div class="navigation">
+        <!-- Navigation to Add products and Categories pages -->
         <div>
             <a href="./addCategories.html">Add Categories</a>
             <a href="./addProducts.html">Add Products</a>
@@ -27,6 +28,7 @@
     </div>
     <div style="padding: 20px;">
         <h2>Cart</h2>
+        <!-- Cart Table -->
         <table id="cartTable">
             <tr>
                 <th>Product Name</th>
@@ -38,6 +40,7 @@
         </table>
 
         <h2>Bill Table</h2>
+        <!-- Bill Table -->
         <table id="billTable">
             <tr>
                 <th>Product Name</th>
@@ -51,8 +54,6 @@
         <span>Total Amount: </span><span id="totalBill"></span><br>
         <button onclick="handleGenerateBill()" id="generateBill">Generate Bill</button>
     </div>
-
-
     <script src="./index.js"></script>
 </body>
 
