@@ -5,12 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Add Category</title>
+    <title>Add Category/Product</title>
 </head>
 
-<body>
-    <input type="text" id="addcategory">
-    <button>Add</button>
+<body >
+    <h2 style="text-align: center; margin: 25px;">Add Category</h2>
+    <table class="prodDetailsTable">
+        <tr>
+            <td><label for="categoryName">Category Name:</label></td>
+            <td><input type="text" id="categoryName"></td>
+        </tr>
+        <tr>
+            <td><label for="Gst">GST</label></td>
+            <td><input type="number" id="categoryGst"></td>
+        </tr>
+        <tr>
+            <td><button onclick="handleAddCategory()">Add</button></td>
+        </tr>
+    </table>
+    <script src="./index.js"></script>
 </body>
 
 </html>

@@ -79,15 +79,8 @@ button {
     cursor: pointer;
 }
 
-select , input[type="number"]{
+select , input{
     padding: 10px;
-    border-radius: 5px;
-    border: #6792d7 1px solid;
-    outline: none;
-}
-
-option {
-    padding: 10px ;
     border-radius: 5px;
     border: #6792d7 1px solid;
     outline: none;
@@ -112,12 +105,20 @@ option {
     gap:10px;
 }
 
-.container{
-    padding: 20px;
-}
-
 /* Styling for the quantity input and add button */
 #quantity,
 #addButton {
     margin-top: 10px;
+}
+
+.prodDetailsTable{
+   margin: auto;
+}
+
+.prodDetailsTable tr td{
+    padding: 10px;
+}
+
+.prodDetailsTable tr{
+    border-bottom: 1px solid #ddd;
 }

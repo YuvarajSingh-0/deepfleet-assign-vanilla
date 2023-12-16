@@ -7,6 +7,28 @@
     <title>Add Products</title>
 </head>
 <body>
-    
+    <h2 style="text-align: center; margin: 25px;">Add Product</h2>
+    <table class="prodDetailsTable">
+        <tr>
+            <td><label for="productName">Product Name:</label></td>
+            <td><input type="text" id="productName"></td>
+        </tr>
+        <tr>
+            <td><label for="productRate">Product Cost:</label></td>
+            <td><input type="number" id="productRate"></td>
+        </tr>
+        <tr>
+            <td><label for="categorySelect">Category</label></td>
+            <td>
+                <select name="category" id="categorySelect">
+                    <!-- Dynamically adding categories after fetching from database -->
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><button onclick="handleAddProduct()">Add</button></td>
+        </tr>
+    </table>
+    <script src="./index.js"></script>
 </body>
 </html>
