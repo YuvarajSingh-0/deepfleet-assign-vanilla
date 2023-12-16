@@ -73,10 +73,11 @@ a {
 
 button {
     background-color: #42cfcf;
-    border: #6792d7 1px solid;
+    border: #9eb7df 1px solid;
     padding: 7px 20px;
     border-radius: 5px;
     cursor: pointer;
+    color: white;
 }
 
 select , input{
@@ -121,4 +122,13 @@ select , input{
 
 .prodDetailsTable tr{
     border-bottom: 1px solid #ddd;
+}
+
+.backButton{
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    padding: 10px;
 }

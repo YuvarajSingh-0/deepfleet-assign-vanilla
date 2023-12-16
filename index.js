@@ -1,51 +1,85 @@
 // Fetch products from the database
-// const products = fetch('http://localhost:3000/api/products')
-const products = {
-    food: { gst: 20, products: [{ name: 'apple', rate: 150 }, { name: 'banana', rate: 100 }] },
-    footwear: { gst: 15, products: [{ name: 'shoes', rate: 700 }, { name: 'socks', rate: 50 }] },
-    electronics: { gst: 25, products: [{ name: 'phone', rate: 300 }, { name: 'charger', rate: 50 }] }
+async function fetchCategories() {
+    const response = await fetch('http://localhost:3000/api/categories');
+    const categories = await response.json();
+    return categories;
 }
-// const products = [{ name: 'apple', category: 'food', rate: 150, gst: 20 }, { name: 'shoes', category: 'footwear', rate: 700, gst: 15 }, { name: 'phone', category: 'electronics', rate: 300, gst: 25 }]; // Replace with your actual database fetch code
-const categories = Object.keys(products);
 
-// Populate the select element with categories
-const categorySelect = document.getElementById('categorySelect');
-categories.forEach(category => {
-    const option = document.createElement('option');
-    option.value = category;
-    option.textContent = category;
-    categorySelect.appendChild(option);
-});
+async function populateCategories() {
+    const categories = await fetchCategories();
+    console.log(categories);
+
+    // Populate the select element with categories
+    const categorySelect = document.getElementById('categorySelect');
+    categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.name;
+        option.textContent = category.name;
+        categorySelect.appendChild(option);
+    });
+}
+
+populateCategories();
+
+// Fetch products from the database
+async function fetchProducts(category) {
+    const response = await fetch(`http://localhost:3000/api/products?category=${category}`);
+    const products = await response.json();
+    return products;
+}
+let productsFromDB = [];
+// Populate the products object with products from the database
+async function populateProducts(category) {
+    productsFromDB = await fetchProducts(category);
+    console.log(productsFromDB, "products");
+    productSelect.innerHTML = '';   // Clear previous options
+    productsFromDB.forEach(product => {
+        const option = document.createElement('option');
+        option.value = product.product;
+        option.textContent = product.product;
+        productSelect.appendChild(option);
+    });
+}
+
 
 // Populate the select element with products based on the selected category
 const productSelect = document.getElementById('productSelect');
 
 categorySelect.addEventListener('change', () => {
     const selectedCategory = categorySelect.value;
-    productSelect.innerHTML = '';   // Clear previous options
-    products[selectedCategory].products.forEach(product => {
-        const option = document.createElement('option');
-        option.value = product.name;
-        option.textContent = product.name;
-        productSelect.appendChild(option);
-    });
+    populateProducts(selectedCategory);
 });
 
 // Trigger change event on categorySelect to display products of default selected category
 categorySelect.dispatchEvent(new Event('change'));
 
-function handleAddToCart(e) {
+async function handleAddToCart(e) {
     const selectedCategory = categorySelect.value;
     const selectedProduct = productSelect.value;
     const quantity = document.getElementById('quantity').value || 1;
 
     // Find the selected product
-    const product = products[selectedCategory].products.find(product => product.name === selectedProduct);
+    const products = productsFromDB;
+    const product = products.find(product => product.product === selectedProduct);
     const rate = product.rate;
-    const gst = products[selectedCategory].gst;
+    const gst = product.gst;
+
 
     // Create a new row in the table
     const table = document.getElementById('cartTable');
+
+    // check if the product is already added to the cart
+    for (let i = 1; i < table.rows.length; i++) {
+        const productName = table.rows[i].cells[0].textContent;
+        if (productName === selectedProduct) {
+            // Update the quantity
+            const quantityCell = table.rows[i].cells[2];
+            quantityCell.textContent = Number(quantityCell.textContent) + Number(quantity);
+            return;
+        }
+    }
+
+    // Create a new row in the table if the product is not already added
     const newRow = table.insertRow();
 
     // Insert cells into the new row
@@ -117,6 +151,11 @@ function handleAddProduct(e) {
     const productCategory = document.getElementById('categorySelect').value;
     const productRate = document.getElementById('productRate').value;
 
+    if (productName === '' || productCategory === '' || productRate === '') {
+        alert("Please fill all the details");
+        return;
+    }
+
     const product = {
         name: productName,
         category: productCategory,
@@ -124,14 +163,16 @@ function handleAddProduct(e) {
     }
 
     // Make a POST request to the server with the product data
-    fetch('http://localhost:3000/api/addproducts', {
+    fetch('http://localhost:3000/api/products', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(product)
     })
-        .then(response => response.json())
+        .then(response => response.json()).then(data => {
+            alert("Product Added Successfully");
+        })
         .catch(error => {
             console.error(error);
         });
@@ -140,20 +181,26 @@ function handleAddProduct(e) {
 function handleAddCategory(e) {
     const categoryName = document.getElementById('categoryName').value;
     const categoryGst = document.getElementById('categoryGst').value;
+    if (categoryName === '' || categoryGst === '') {
+        alert("Please fill all the details");
+        return;
+    }
     const category = {
         name: categoryName,
         gst: categoryGst
     }
 
     // Make a POST request to the server with the product data
-    fetch('http://localhost:3000/api/addcategory', {
+    fetch('http://localhost:3000/api/category', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(category)
     })
-        .then(response => response.json())
+        .then(response => response.json()).then(data => {
+            alert("Category Added Successfully");
+        })
         .catch(error => {
             console.error(error);
         });
