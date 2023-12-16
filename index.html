@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Billing</title>
+</head>
+
+<body>
+    <div class="navigation">
+        <div>
+            <a href="./addCategories.html">Add Categories</a>
+            <a href="./addProducts">Add Products</a>
+        </div>
+        <div>
+            <select name="category" id="categorySelect">
+                <!-- Dynamically adding categories after fetching from database -->
+            </select>
+            <select name="product" id="productSelect">
+                <!-- Dynamically adding products after fetching from database -->
+            </select>
+            <input type="number" name="quantity" id="quantity" placeholder="Quantity">
+            <button onclick="handleAddToCart()" id="addButton">Add</button>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Cart Table</h2>
+        <table id="cartTable">
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>GST</th>
+            </tr>
+        </table>
+
+        <h2>Bill Table</h2>
+        <table id="billTable">
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>GST</th>
+                <th>Total</th>
+            </tr>
+        </table>
+        <span>Total Amount: </span><span id="totalBill"></span><br>
+        <button onclick="handleGenerateBill()" id="generateBill">Generate Bill</button>
+    </div>
+
+
+    <script src="./index.js"></script>
+</body>
+
+</html>
